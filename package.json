@@ -12,6 +12,12 @@
 	"activationEvents": [
 		"*"
 	],
+	"extensionDependencies": [
+		"johnpapa.vscode-peacock"
+	],
+	"extensionPack": [
+		"johnpapa.vscode-peacock"
+	],
 	"main": "./out/extension.js",
 	"contributes": {
 		"commands": [

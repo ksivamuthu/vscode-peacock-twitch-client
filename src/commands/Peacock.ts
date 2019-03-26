@@ -1,12 +1,12 @@
 import * as vscode from 'vscode';
 import { Commands } from '../Enum';
 
-export class PeacockCommands {
+export class Peacock {
     public async handleCommands(command: string, param: string) {
         if (command !== '!peacock') {
             return;
         }
-        param = param.toLowerCase();
+        param = param.toLowerCase().trim();
 
         if (param === 'random') {
             await vscode.commands.executeCommand(Commands.changeColorToRandom);

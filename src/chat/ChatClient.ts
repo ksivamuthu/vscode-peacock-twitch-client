@@ -1,5 +1,5 @@
 import { Client, Options, Userstate } from 'tmi.js';
-import { PeacockCommands } from '../commands/PeacockCommands';
+import { Peacock } from '../commands/Peacock';
 
 export default class ChatClient {
     private readonly _client: Client;
@@ -31,7 +31,7 @@ export default class ChatClient {
         if (!message) { return; }
 
         if (message.startsWith('!peacock')) {
-            const peacockCommand = new PeacockCommands();
+            const peacockCommand = new Peacock();
             await peacockCommand.handleCommands('!peacock', message.replace('!peacock', '').trim());
         }
     }
