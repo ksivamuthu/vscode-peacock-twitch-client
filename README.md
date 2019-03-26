@@ -10,10 +10,10 @@ Twitch chatters can change the color of your workspace from chat command:- !peac
 
 For e.g 
 
-!peacock random - Set the random color on your vscode workspace.
-!peacock angular - Set "Angular Red" color on your vscode workspace.
-!peacock vue - Set "Vue Green" color on your vscode workspace.
-!peacock react - Set "React Blue" color on your vscode workspace.
+* !peacock random - Set the random color on your vscode workspace.
+* !peacock angular - Set "Angular Red" color on your vscode workspace.
+* !peacock vue - Set "Vue Green" color on your vscode workspace.
+* !peacock react - Set "React Blue" color on your vscode workspace.
 
 ## Requirements
 
