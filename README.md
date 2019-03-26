@@ -1,4 +1,10 @@
-# VSCode Peacock Twitch Client
+<div align="center">
+<img src="resources/vscode.png" width="100" height="100">
+<img src="resources/peacock.png" width="100" height="100">
+<img src="resources/twitch.png" width="100" height="100">
+</div>
+
+# VSCode Peacock Twitch Extension
 
 A Visual Studio Code extension that listens your twitch chat, viewers can change the vscode workspace color you are working by sending the command **!peacock**
 
