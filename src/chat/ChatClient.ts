@@ -3,10 +3,14 @@ import { Peacock } from '../commands/Peacock';
 
 export default class ChatClient {
     private readonly _client: Client;
+    private readonly _peacock: Peacock;
+
     constructor(options: Options) {
         this._client = Client(options);
-        this._client.on('connected', this.onConnectedHandler);
-        this._client.on('message', this.onMessageHandler);
+        this._client.on('connected', this.onConnectedHandler.bind(this));
+        this._client.on('message', this.onMessageHandler.bind(this));
+
+        this._peacock = new Peacock();
     }
 
     public connect(): Promise<[string, number]> {
@@ -31,8 +35,7 @@ export default class ChatClient {
         if (!message) { return; }
 
         if (message.startsWith('!peacock')) {
-            const peacockCommand = new Peacock();
-            await peacockCommand.handleCommands('!peacock', message.replace('!peacock', '').trim());
+            await this._peacock.handleCommands('!peacock', message.replace('!peacock', '').trim());
         }
     }
 }

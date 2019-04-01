@@ -1,6 +1,11 @@
+import * as dotenv from 'dotenv';
+dotenv.config();
+
 import * as vscode from 'vscode';
 import ChatClient from './chat/ChatClient';
 import { Options } from 'tmi.js';
+import { Commands } from './Enum';
+import { handleSignIn, handleSignOut } from './Authentication';
 
 const opts: Options = {
 	identity: {
@@ -18,12 +23,15 @@ export function activate(context: vscode.ExtensionContext) {
 
 	chatClient.activate();
 
-	let disposable = vscode.commands.registerCommand('extension.helloWorld', () => {
-		vscode.commands.executeCommand('peacock.changeColorToRandom');
+	let helloWorld = vscode.commands.registerCommand('extension.helloWorld', () => {
+		vscode.commands.executeCommand('peacock.enterColor', "purple");
 		vscode.window.showInformationMessage('Changed Peacock Color to Random');
 	});
 
-	context.subscriptions.push(disposable);
+	let signInCommand = vscode.commands.registerCommand(Commands.twitchSignIn, handleSignIn);
+	let signOutCommand = vscode.commands.registerCommand(Commands.twitchSignOut, handleSignOut);
+
+	context.subscriptions.push(helloWorld, signInCommand, signOutCommand);
 }
 
 export function deactivate() {

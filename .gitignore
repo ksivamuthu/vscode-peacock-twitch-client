@@ -4,3 +4,4 @@ node_modules
 *.vsix
 .env
 .vscode/settings.json
+dist
