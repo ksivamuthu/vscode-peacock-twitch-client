@@ -2,7 +2,7 @@ import * as vscode from 'vscode';
 import { Commands } from '../Enum';
 
 export class Peacock {
-    private static PULSE_FREQUENCY: number = 5;
+    private static PULSE_FREQUENCY: number = 10;
 
     public async handleCommands(command: string, param: string) {
         if (command !== '!peacock') {
@@ -27,7 +27,17 @@ export class Peacock {
     private async startCopMode() {
         for (var i = 0; i < Peacock.PULSE_FREQUENCY; i++) {
             await vscode.commands.executeCommand(Commands.enterColor, 'red');
+            await this.delay(100);
             await vscode.commands.executeCommand(Commands.enterColor, '#33A5FF');
+            await this.delay(100);
         }
+    }
+
+    async delay(ms: number) {
+        return new Promise(resolve => {
+            setTimeout(() => {
+                resolve();
+            }, ms);
+        });
     }
 }

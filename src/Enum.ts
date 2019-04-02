@@ -9,5 +9,7 @@ export enum Commands {
     changeColorToFavorite = 'peacock.changeColorToFavorite',
 
     twitchSignIn = 'peacockTwitch.signIn',
-    twitchSignOut = 'peacockTwitch.signOut'
+    twitchSignOut = 'peacockTwitch.signOut',
+    chatConnect = 'peacockTwitch.chatConnect',
+    chatDisconnect = 'peacockTwitch.chatDisconnect'
 }

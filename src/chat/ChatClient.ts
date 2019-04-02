@@ -17,6 +17,10 @@ export default class ChatClient {
         return this._client.connect();
     }
 
+    public disconnect(): Promise<[string, number]> {
+        return this._client.disconnect();
+    }
+
     public activate() {
         this._client.connect();
     }

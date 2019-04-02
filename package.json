@@ -61,7 +61,7 @@
 		"vscode:prepublish": "webpack --mode production",
 		"webpack": "webpack --mode none",
 		"watch": "webpack --mode none --watch",
-		"postinstall": "`node node_modules/vscode/bin/install",
+		"postinstall": "node node_modules/vscode/bin/install",
 		"just-test": "node node_modules/vscode/bin/test",
 		"test-compile": "tsc -p ./ && npm run && webpack"
 	},
@@ -69,6 +69,7 @@
 		"@types/dotenv": "~4.0.3",
 		"@types/mocha": "^2.2.42",
 		"@types/node": "^10.12.21",
+		"@types/node-fetch": "^2.1.7",
 		"@types/sinon": "^7.0.7",
 		"@types/tmi.js": "~1.4.0",
 		"@types/uuid": "~3.4.3",
@@ -86,6 +87,7 @@
 		"dotenv": "~7.0.0",
 		"keytar": "^4.4.1",
 		"tmi.js": "~1.4.2",
-		"uuid": "~3.3.2"
+		"uuid": "~3.3.2",
+		"node-fetch": "~2.3.0"
 	}
 }
