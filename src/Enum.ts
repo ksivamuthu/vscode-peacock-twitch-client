@@ -13,3 +13,11 @@ export enum Commands {
     chatConnect = 'peacockTwitch.chatConnect',
     chatDisconnect = 'peacockTwitch.chatDisconnect'
 }
+
+export enum TwitchClientStatus {
+    loggingIn,
+    loggedIn,
+    chatConnected,
+    chatDisconnected,
+    loggedOut
+}

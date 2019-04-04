@@ -5,9 +5,9 @@ import * as url from 'url';
 import { readFileSync } from 'fs';
 import * as keytartype from 'keytar';
 import { v4 } from 'uuid';
-import { env } from 'vscode';
-import { EventEmitter } from 'events';
+import { env, EventEmitter } from 'vscode';
 import * as fetch from 'node-fetch';
+import { TwitchClientStatus } from './Enum';
 
 const service = 'peacock-vscode-twitch-client';
 const account = 'peacock-vscode-twitch';
@@ -34,12 +34,17 @@ function getNodeModule<T>(moduleName: string): T | undefined {
 
 const keytar: typeof keytartype | undefined = getNodeModule<typeof keytartype>('keytar');
 
-export class AuthenticationService extends EventEmitter {
+export class AuthenticationService {
+
+    private authStatusEventEmitter = new EventEmitter<TwitchClientStatus>();
+    public onAuthStatusChanged = this.authStatusEventEmitter.event;
 
     public async handleSignIn() {
-        this.handleSignOut();
+
+        this.authStatusEventEmitter.fire(TwitchClientStatus.loggingIn);
 
         vscode.window.showInformationMessage('Signing in');
+
         if (keytar) {
             const accessToken = await keytar.getPassword(service, account);
             if (!accessToken) {
@@ -51,6 +56,8 @@ export class AuthenticationService extends EventEmitter {
                     `&redirect_uri=http://localhost:5544` +
                     `&response_type=token&scope=chat:edit chat:read user:read:email` +
                     `&state=${state}`));
+            } else {
+                this.authStatusEventEmitter.fire(TwitchClientStatus.loggedIn);
             }
         }
     }
@@ -61,14 +68,19 @@ export class AuthenticationService extends EventEmitter {
             keytar.deletePassword(service, account);
         }
         vscode.window.showInformationMessage('Signing out');
+        this.authStatusEventEmitter.fire(TwitchClientStatus.loggedOut);
     }
 
     public async currentUser() {
         if (keytar) {
             var accessToken = await keytar.getPassword(service, account);
-            var userDetails = await this.getUserDetails(accessToken);
-            return { ...userDetails, accessToken };
+            if (accessToken) {
+                var userDetails = await this.getUserDetails(accessToken);
+                return { ...userDetails, accessToken };
+            }
         }
+
+        return null;
     }
 
     private async getUserDetails(token: string | null) {
@@ -94,11 +106,15 @@ export class AuthenticationService extends EventEmitter {
                 if (keytar) {
                     if (q.state === state) {
                         keytar.setPassword(service, account, q.access_token);
-                        this.emit('SignInSuccess');
+                        this.authStatusEventEmitter.fire(TwitchClientStatus.loggedIn);
                     } else {
                         vscode.window.showErrorMessage("Error while logging in. State mismatch error");
-                        this.emit('SignInError');
+                        this.authStatusEventEmitter.fire(TwitchClientStatus.loggedOut);
                     }
+
+                    setTimeout(() => {
+                        server.close();
+                    }, 3000);
                 }
                 res.writeHead(200);
                 res.end(file);
