@@ -2,10 +2,16 @@
 	"name": "vscode-peacock-twitch-client",
 	"displayName": "vscode-peacock-twitch-client",
 	"description": "Peacock VSCode Twitch Client",
+	"publisher": "ksivamuthu",
 	"version": "0.0.1",
 	"engines": {
 		"vscode": "^1.32.0"
 	},
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/ksivamuthu/vscode-peacock-twitch-client"
+	},
+	"homepage": "https://github.com/ksivamuthu/vscode-peacock-twitch-client/blob/master/README.md",
 	"categories": [
 		"Other"
 	],

@@ -1,8 +1,8 @@
-<div align="center">
-<img src="resources/vscode.png" width="100" height="100">
-<img src="resources/peacock.png" width="100" height="100">
-<img src="resources/twitch.png" width="100" height="100">
-</div>
+.<p align="center">
+![](./resources/vscode.png)
+![](./resources/peacock.png) 
+![](./resources/twitch.png) 
+</p>
 
 # VSCode Peacock Twitch Extension
 
@@ -14,7 +14,7 @@ Twitch chatters can change the color of your workspace from chat command:- **!pe
   * a random color
   * the primary color for angular, vue, or react
 
-![](resources/peacock-twitch.gif)  
+![](./resources/peacock-twitch.gif)  
 
 List of commands:
 
