@@ -1,6 +1,6 @@
 {
 	"name": "vscode-peacock-twitch-client",
-	"displayName": "vscode-peacock-twitch-client",
+	"displayName": "Peacock Twitch Client",
 	"description": "Peacock VSCode Twitch Client",
 	"publisher": "ksivamuthu",
 	"version": "0.0.1",
