@@ -1,32 +1,41 @@
 import { Client, Options, Userstate } from 'tmi.js';
 import { Peacock } from '../commands/Peacock';
+import { disconnect } from 'cluster';
+import { EventEmitter } from 'vscode';
+import { TwitchClientStatus } from '../Enum';
 
 export default class ChatClient {
-    private readonly _client: Client;
+    private _client: Client | null;
     private readonly _peacock: Peacock;
 
-    constructor(options: Options) {
-        this._client = Client(options);
-        this._client.on('connected', this.onConnectedHandler.bind(this));
-        this._client.on('message', this.onMessageHandler.bind(this));
+    private chatClientStatusEventEmitter = new EventEmitter<TwitchClientStatus>();
+    public onStatusChanged = this.chatClientStatusEventEmitter.event;
 
+    constructor() {
+        this._client = null;
         this._peacock = new Peacock();
     }
 
-    public connect(): Promise<[string, number]> {
-        return this._client.connect();
+    public async connect(options: Options): Promise<[string, number]> {
+        await disconnect();
+        this._client = Client(options);
+        this._client.on('connected', this.onConnectedHandler.bind(this));
+        this._client.on('message', this.onMessageHandler.bind(this));
+        const status = await this._client.connect();
+        this.chatClientStatusEventEmitter.fire(TwitchClientStatus.chatConnected);
+        return status;
     }
 
-    public disconnect(): Promise<[string, number]> {
-        return this._client.disconnect();
+    public async disconnect() {
+        if (this._client) {
+            this._client.disconnect();
+            this.chatClientStatusEventEmitter.fire(TwitchClientStatus.chatDisconnected);
+            this._client = null;
+        }
     }
 
-    public activate() {
-        this._client.connect();
-    }
-
-    public deactivate() {
-        this._client.disconnect();
+    public isConnected(): boolean {
+        return this._client ? this._client.readyState() === "OPEN" : false;
     }
 
     private onConnectedHandler(address: string, port: number) {

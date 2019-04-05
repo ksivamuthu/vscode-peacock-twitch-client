@@ -22,8 +22,12 @@
 	"contributes": {
 		"commands": [
 			{
-				"command": "extension.helloWorld",
-				"title": "Hello World"
+				"command": "peacockTwitch.chatConnect",
+				"title": "Peacock Twitch: Chat Connect"
+			},
+			{
+				"command": "peacockTwitch.chatDisconnect",
+				"title": "Peacock Twitch: Chat Disconnect"
 			},
 			{
 				"command": "peacockTwitch.signIn",
@@ -36,23 +40,7 @@
 		],
 		"configuration": {
 			"title": "Peacock Twitch Client",
-			"properties": {
-				"peacockTwitch.username": {
-					"type": "string",
-					"default": "",
-					"description": "Twitch Client Username"
-				},
-				"peacockTwitch.oauthToken": {
-					"type": "string",
-					"default": "",
-					"description": "Twitch Client OAuth Token"
-				},
-				"peacockTwitch.channels": {
-					"type": "string",
-					"default": "",
-					"description": "Twitch Channels the bot listens for, in comma separated value"
-				}
-			}
+			"properties": {}
 		}
 	},
 	"scripts": {

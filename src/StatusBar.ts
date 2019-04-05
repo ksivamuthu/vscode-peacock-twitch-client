@@ -1,21 +1,33 @@
 import { ExtensionContext, StatusBarAlignment, window, StatusBarItem, Event } from "vscode";
 import { TwitchClientStatus } from "./Enum";
 import { AuthenticationService } from "./Authentication";
+import ChatClient from "./chat/ChatClient";
 
 
-export async function createStatusBarItem(context: ExtensionContext, authService: AuthenticationService) {
+export async function createStatusBarItem(context: ExtensionContext,
+    authService: AuthenticationService,
+    chatClient: ChatClient) {
+
     const statusBarItem = window.createStatusBarItem(StatusBarAlignment.Left);
     const user = await authService.currentUser();
-    updateStatusBarItem(statusBarItem, user ? TwitchClientStatus.loggedIn : TwitchClientStatus.loggedOut, user ? user.login : '');
+    updateStatusBarItem(statusBarItem, user ? TwitchClientStatus.loggedIn : TwitchClientStatus.loggedOut,
+        chatClient.isConnected(),
+        user ? user.login : '');
 
-    context.subscriptions.push(statusBarItem, authService.onAuthStatusChanged(async (status) => {
-        const user = await authService.currentUser();
-        updateStatusBarItem(statusBarItem, status, user.login);
-    }));
+    context.subscriptions.push(statusBarItem, authService.onAuthStatusChanged(updateStatusBar),
+        chatClient.onStatusChanged(updateStatusBar));
+
     return statusBarItem;
+
+    async function updateStatusBar(status: TwitchClientStatus) {
+        const user = await authService.currentUser();
+        updateStatusBarItem(statusBarItem, status, chatClient.isConnected(), user ? user.login : null);
+    }
 }
 
+
 function updateStatusBarItem(statusBarItem: StatusBarItem, authStatus: TwitchClientStatus,
+    chatClientConnected: boolean,
     userName?: string | undefined) {
     let text = 'Peacock Twitch: ';
     statusBarItem.show();
@@ -25,7 +37,9 @@ function updateStatusBarItem(statusBarItem: StatusBarItem, authStatus: TwitchCli
             text += 'Logging In...';
             break;
         case TwitchClientStatus.loggedIn:
-            text += userName;
+        case TwitchClientStatus.chatConnected:
+        case TwitchClientStatus.chatDisconnected:
+            text += `${userName} ${chatClientConnected ? '' : '(disconnected)'}`;
             break;
         case TwitchClientStatus.loggedOut:
             statusBarItem.hide();

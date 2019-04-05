@@ -39,15 +39,20 @@ export class AuthenticationService {
     private authStatusEventEmitter = new EventEmitter<TwitchClientStatus>();
     public onAuthStatusChanged = this.authStatusEventEmitter.event;
 
+    async initialize() {
+        const user = await this.currentUser();
+        if (user) {
+            this.authStatusEventEmitter.fire(TwitchClientStatus.loggedIn);
+        }
+    }
+
     public async handleSignIn() {
-
-        this.authStatusEventEmitter.fire(TwitchClientStatus.loggingIn);
-
-        vscode.window.showInformationMessage('Signing in');
-
         if (keytar) {
             const accessToken = await keytar.getPassword(service, account);
             if (!accessToken) {
+                this.authStatusEventEmitter.fire(TwitchClientStatus.loggingIn);
+                vscode.window.showInformationMessage('Signing in');
+
                 const state = v4();
 
                 this.createServer(state);
