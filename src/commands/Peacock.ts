@@ -18,6 +18,8 @@ export class Peacock {
             vscode.window.showInformationMessage('Reset Peacock Colors');
         } else if (param === 'cop') {
             this.startCopMode();
+        } else if (param === 'rainbow') {
+            this.startRainbowMode();
         } else {
             await vscode.commands.executeCommand(Commands.enterColor, param);
             vscode.window.showInformationMessage(`Changed Peacock Color to ${param}`);
@@ -30,6 +32,14 @@ export class Peacock {
             await this.delay(100);
             await vscode.commands.executeCommand(Commands.enterColor, '#33A5FF');
             await this.delay(100);
+        }
+    }
+
+    private async startRainbowMode() {
+        const rainbowColors = ['violet', 'indigo', 'blue', 'green', 'yellow', 'orange', 'red'];
+        for (var i = 0; i < rainbowColors.length; i++) {
+            await vscode.commands.executeCommand(Commands.enterColor, rainbowColors[i]);
+            await this.delay(300);
         }
     }
 
