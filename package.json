@@ -1,9 +1,16 @@
 {
 	"name": "vscode-peacock-twitch-client",
-	"displayName": "Peacock Twitch Client",
-	"description": "Peacock VSCode Twitch Client",
+	"displayName": "Peacock Twitch Extension",
+	"description": "Change your vscode workspace color using twitch chat client",
 	"publisher": "ksivamuthu",
-	"version": "0.0.1",
+	"license": "MIT",
+	"author": {
+		"name": "Sivamuthu Kumar",
+		"email": "sivamuthukumar07@gmail.com"
+	},
+	"icon": "https://github.com/ksivamuthu/vscode-peacock-twitch-client/blob/master/resources/logo.png",
+	"version": "1.0.0-preview",
+	"preview": true,
 	"engines": {
 		"vscode": "^1.32.0"
 	},
@@ -15,8 +22,18 @@
 	"categories": [
 		"Other"
 	],
+	"keywords": [
+		"peacock",
+		"twitch",
+		"color",
+		"workspace"
+	],
 	"activationEvents": [
-		"*"
+		"*",
+		"onCommand:peacockTwitch.signIn",
+		"onCommand:peacockTwitch.signOut",
+		"onCommand:peacockTwitch.chatConnect",
+		"onCommand:peacockTwitch.chatDisconnect"
 	],
 	"extensionDependencies": [
 		"johnpapa.vscode-peacock"
