@@ -1,5 +1,5 @@
 import * as vscode from 'vscode';
-import { Commands } from '../Enum';
+import { Commands, BuiltInColors } from '../Enum';
 
 export class Peacock {
     private static PULSE_FREQUENCY: number = 10;
@@ -16,6 +16,15 @@ export class Peacock {
         } else if (param === 'reset') {
             await vscode.commands.executeCommand(Commands.resetColors);
             vscode.window.showInformationMessage('Reset Peacock Colors');
+        } else if (param === 'angular') {
+            await vscode.commands.executeCommand(Commands.enterColor, BuiltInColors.Angular);
+            vscode.window.showInformationMessage('Changed Peacock Color to Angular Red');
+        } else if (param === 'vue') {
+            await vscode.commands.executeCommand(Commands.enterColor, BuiltInColors.Vue);
+            vscode.window.showInformationMessage('Changed Peacock Color to Vue Green');
+        } else if (param === 'react') {
+            await vscode.commands.executeCommand(Commands.enterColor, BuiltInColors.React);
+            vscode.window.showInformationMessage('Changed Peacock Color to React Blue');
         } else if (param === 'cop') {
             this.startCopMode();
         } else if (param === 'rainbow') {

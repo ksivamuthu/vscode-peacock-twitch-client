@@ -14,6 +14,12 @@ export enum Commands {
     chatDisconnect = 'peacockTwitch.chatDisconnect'
 }
 
+export enum BuiltInColors {
+    Vue = '#42b883',
+    Angular = '#b52e31',
+    React = '#00b3e6'
+}
+
 export enum TwitchClientStatus {
     loggingIn,
     loggedIn,
