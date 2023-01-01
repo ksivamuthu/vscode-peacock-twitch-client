@@ -85,15 +85,15 @@
 		"@types/sinon": "^7.0.7",
 		"@types/tmi.js": "~1.4.0",
 		"@types/uuid": "~3.4.3",
-		"copy-webpack-plugin": "^5.0.2",
+		"copy-webpack-plugin": "^11.0.0",
 		"node-loader": "^0.6.0",
 		"sinon": "^7.2.5",
-		"ts-loader": "^5.3.3",
+		"ts-loader": "^9.4.2",
 		"tslint": "^5.12.1",
 		"typescript": "^3.3.1",
 		"vscode": "^1.1.28",
-		"webpack": "^4.29.6",
-		"webpack-cli": "^3.2.3"
+		"webpack": "^5.75.0",
+		"webpack-cli": "^5.0.1"
 	},
 	"dependencies": {
 		"dotenv": "~7.0.0",
